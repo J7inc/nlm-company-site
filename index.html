@@ -7,682 +7,158 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Jost:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-:root {
-  --deep:    #0b1c13;
-  --green:   #122a1c;
-  --mid:     #1a3a2a;
-  --light:   #254d36;
-  --gold:    #c9a84c;
-  --gold-lt: #dfc070;
-  --stone:   #f2ede6;
-  --cream:   #faf8f4;
-  --text-muted: rgba(255,255,255,0.38);
-  --text-soft:  rgba(255,255,255,0.62);
-}
-
+:root { --deep: #0b1c13; --green: #122a1c; --mid: #1a3a2a; --light: #254d36; --gold: #c9a84c; --gold-lt: #dfc070; --stone: #f2ede6; --cream: #faf8f4; }
 html { scroll-behavior: smooth; }
 body { font-family: 'Jost', sans-serif; background: var(--cream); color: var(--deep); overflow-x: hidden; }
-
-/* ─── TYPOGRAPHY ─── */
-.serif { font-family: 'Cormorant Garamond', serif; }
-.mono  { font-family: 'DM Mono', monospace; }
-
-/* ─── NAV ─── */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 28px 64px;
-  transition: all 0.5s ease;
-}
-nav.dark {
-  background: rgba(11,28,19,0.97);
-  backdrop-filter: blur(16px);
-  padding: 18px 64px;
-  border-bottom: 1px solid rgba(201,168,76,0.12);
-}
-
-.nav-logo {
-  display: flex; flex-direction: column; gap: 3px;
-}
-.logo-name {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 20px; font-weight: 700; letter-spacing: 0.12em;
-  text-transform: uppercase; color: var(--gold);
-}
-.logo-tag {
-  font-size: 9.5px; font-weight: 400; letter-spacing: 0.22em;
-  text-transform: uppercase; color: rgba(255,255,255,0.35);
-}
-
-.nav-links {
-  display: flex; gap: 44px; list-style: none;
-}
-.nav-links a {
-  font-size: 12px; font-weight: 500; letter-spacing: 0.14em;
-  text-transform: uppercase; color: rgba(255,255,255,0.55);
-  text-decoration: none; transition: color 0.2s;
-}
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; display: flex; align-items: center; justify-content: space-between; padding: 28px 64px; transition: all 0.5s ease; }
+nav.dark { background: rgba(11,28,19,0.97); backdrop-filter: blur(16px); padding: 18px 64px; border-bottom: 1px solid rgba(201,168,76,0.12); }
+.nav-logo { display: flex; flex-direction: column; gap: 3px; }
+.logo-name { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); }
+.logo-tag { font-size: 9.5px; font-weight: 400; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.35); }
+.nav-links { display: flex; gap: 44px; list-style: none; }
+.nav-links a { font-size: 12px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.55); text-decoration: none; transition: color 0.2s; }
 .nav-links a:hover { color: var(--gold); }
-
-.nav-cta {
-  font-family: 'Jost', sans-serif;
-  font-size: 11px; font-weight: 600; letter-spacing: 0.16em;
-  text-transform: uppercase; color: var(--deep);
-  background: var(--gold); border: none;
-  padding: 12px 30px; border-radius: 1px;
-  cursor: pointer; transition: background 0.2s;
-}
-.nav-cta:hover { background: var(--gold-lt); }
-
-/* ─── HERO ─── */
-.hero {
-  min-height: 100vh;
-  background: var(--deep);
-  display: flex; flex-direction: column;
-  justify-content: flex-end;
-  position: relative; overflow: hidden;
-}
-
-/* Layered background atmosphere */
-.hero-bg {
-  position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse 90% 70% at 60% 100%, rgba(37,77,54,0.55) 0%, transparent 65%),
-    radial-gradient(ellipse 60% 50% at 15% 80%, rgba(26,58,42,0.4) 0%, transparent 55%),
-    radial-gradient(ellipse 100% 40% at 50% 0%, rgba(11,28,19,0.9) 0%, transparent 80%),
-    linear-gradient(175deg, var(--deep) 0%, #0e2219 40%, #142d1e 75%, #1a3825 100%);
-}
-
-/* Decorative line grid */
-.hero-grid {
-  position: absolute; inset: 0; opacity: 0.04;
-  background-image:
-    linear-gradient(rgba(201,168,76,1) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(201,168,76,1) 1px, transparent 1px);
-  background-size: 80px 80px;
-}
-
-/* Large decorative letter */
-.hero-watermark {
-  position: absolute; right: -40px; bottom: -80px;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 520px; font-weight: 700; font-style: italic;
-  color: rgba(201,168,76,0.04); line-height: 1;
-  pointer-events: none; user-select: none;
-  letter-spacing: -0.05em;
-}
-
-/* Floating accent elements */
-.hero-accent-line {
-  position: absolute; left: 64px; top: 180px;
-  width: 1px; height: 220px;
-  background: linear-gradient(to bottom, transparent, var(--gold), transparent);
-  opacity: 0.5;
-}
-
-.hero-content {
-  position: relative; z-index: 2;
-  padding: 0 64px 96px 64px;
-  max-width: 900px;
-}
-
-.hero-eyebrow {
-  display: flex; align-items: center; gap: 16px;
-  margin-bottom: 36px;
-}
-.hero-eyebrow-line {
-  width: 56px; height: 1px; background: var(--gold); opacity: 0.7;
-}
-.hero-eyebrow-text {
-  font-family: 'DM Mono', monospace;
-  font-size: 10.5px; font-weight: 500; letter-spacing: 0.2em;
-  text-transform: uppercase; color: var(--gold);
-}
-
-.hero-h1 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(56px, 7.5vw, 108px);
-  font-weight: 600; line-height: 0.95;
-  letter-spacing: -0.02em; color: var(--cream);
-  margin-bottom: 40px;
-}
-.hero-h1 em {
-  font-style: italic; color: var(--gold);
-}
-
-.hero-sub {
-  font-size: 17px; font-weight: 300; line-height: 1.75;
-  color: rgba(255,255,255,0.52); max-width: 560px;
-  margin-bottom: 56px;
-}
-
-.hero-bottom {
-  display: flex; align-items: center; gap: 48px;
-}
-
-.btn-gold {
-  font-family: 'Jost', sans-serif;
-  font-size: 11.5px; font-weight: 600; letter-spacing: 0.18em;
-  text-transform: uppercase; color: var(--deep);
-  background: var(--gold); border: none;
-  padding: 18px 44px; border-radius: 1px;
-  cursor: pointer; transition: all 0.25s;
-  white-space: nowrap;
-}
-.btn-gold:hover { background: var(--gold-lt); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(201,168,76,0.25); }
-
-.btn-ghost-lt {
-  font-size: 12px; font-weight: 500; letter-spacing: 0.12em;
-  text-transform: uppercase; color: rgba(255,255,255,0.45);
-  background: none; border: 1px solid rgba(255,255,255,0.18);
-  padding: 17px 36px; border-radius: 1px;
-  cursor: pointer; transition: all 0.2s; text-decoration: none;
-  display: inline-block;
-}
-.btn-ghost-lt:hover { border-color: rgba(255,255,255,0.45); color: rgba(255,255,255,0.75); }
-
-.hero-scroll-hint {
-  position: absolute; bottom: 40px; right: 64px; z-index: 2;
-  display: flex; flex-direction: column; align-items: center; gap: 10px;
-}
-.scroll-label {
-  font-family: 'DM Mono', monospace;
-  font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
-  color: rgba(255,255,255,0.22); writing-mode: vertical-rl;
-}
-.scroll-line {
-  width: 1px; height: 56px;
-  background: linear-gradient(to bottom, rgba(201,168,76,0.5), transparent);
-  animation: scrollPulse 2s ease-in-out infinite;
-}
-@keyframes scrollPulse {
-  0%, 100% { opacity: 0.3; transform: scaleY(1); }
-  50% { opacity: 0.8; transform: scaleY(1.1); }
-}
-
-/* Hero stats row */
-.hero-stats {
-  position: absolute; right: 64px; top: 50%;
-  transform: translateY(-50%); z-index: 2;
-  display: flex; flex-direction: column; gap: 2px;
-}
-.hero-stat-box {
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.07);
-  padding: 22px 28px; text-align: center;
-  min-width: 140px;
-  border-bottom-color: transparent;
-}
+.nav-cta { font-family: 'Jost', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--deep); background: var(--gold); border: none; padding: 12px 30px; border-radius: 1px; cursor: pointer; transition: background 0.2s; }
+.hero { min-height: 100vh; background: var(--deep); display: flex; flex-direction: column; justify-content: flex-end; position: relative; overflow: hidden; }
+.hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 90% 70% at 60% 100%, rgba(37,77,54,0.55) 0%, transparent 65%), radial-gradient(ellipse 60% 50% at 15% 80%, rgba(26,58,42,0.4) 0%, transparent 55%), linear-gradient(175deg, var(--deep) 0%, #0e2219 40%, #142d1e 75%, #1a3825 100%); }
+.hero-grid { position: absolute; inset: 0; opacity: 0.04; background-image: linear-gradient(rgba(201,168,76,1) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,1) 1px, transparent 1px); background-size: 80px 80px; }
+.hero-watermark { position: absolute; right: -40px; bottom: -80px; font-family: 'Cormorant Garamond', serif; font-size: 520px; font-weight: 700; font-style: italic; color: rgba(201,168,76,0.04); line-height: 1; pointer-events: none; user-select: none; }
+.hero-accent-line { position: absolute; left: 64px; top: 180px; width: 1px; height: 220px; background: linear-gradient(to bottom, transparent, var(--gold), transparent); opacity: 0.5; }
+.hero-content { position: relative; z-index: 2; padding: 0 64px 96px 64px; max-width: 900px; }
+.hero-eyebrow { display: flex; align-items: center; gap: 16px; margin-bottom: 36px; }
+.hero-eyebrow-line { width: 56px; height: 1px; background: var(--gold); opacity: 0.7; }
+.hero-eyebrow-text { font-family: 'DM Mono', monospace; font-size: 10.5px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); }
+.hero-h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(56px, 7.5vw, 108px); font-weight: 600; line-height: 0.95; letter-spacing: -0.02em; color: var(--cream); margin-bottom: 40px; }
+.hero-h1 em { font-style: italic; color: var(--gold); }
+.hero-sub { font-size: 17px; font-weight: 300; line-height: 1.75; color: rgba(255,255,255,0.52); max-width: 560px; margin-bottom: 56px; }
+.hero-bottom { display: flex; align-items: center; gap: 48px; }
+.btn-gold { font-family: 'Jost', sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--deep); background: var(--gold); border: none; padding: 18px 44px; border-radius: 1px; cursor: pointer; transition: all 0.25s; white-space: nowrap; }
+.btn-ghost-lt { font-size: 12px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.45); background: none; border: 1px solid rgba(255,255,255,0.18); padding: 17px 36px; border-radius: 1px; cursor: pointer; transition: all 0.2s; text-decoration: none; display: inline-block; }
+.hero-scroll-hint { position: absolute; bottom: 40px; right: 64px; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.scroll-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.22); writing-mode: vertical-rl; }
+.scroll-line { width: 1px; height: 56px; background: linear-gradient(to bottom, rgba(201,168,76,0.5), transparent); animation: scrollPulse 2s ease-in-out infinite; }
+@keyframes scrollPulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.8; } }
+.hero-stats { position: absolute; right: 64px; top: 50%; transform: translateY(-50%); z-index: 2; display: flex; flex-direction: column; gap: 2px; }
+.hero-stat-box { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07); padding: 22px 28px; text-align: center; min-width: 140px; border-bottom-color: transparent; }
 .hero-stat-box:last-child { border-bottom-color: rgba(255,255,255,0.07); }
-.h-stat-num {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 44px; font-weight: 700; color: var(--gold);
-  line-height: 1;
-}
-.h-stat-label {
-  font-size: 10px; font-weight: 400; letter-spacing: 0.12em;
-  text-transform: uppercase; color: rgba(255,255,255,0.32);
-  margin-top: 8px; line-height: 1.5;
-}
-
-/* ─── SERVICES BAND ─── */
-.services-band {
-  background: var(--gold);
-  padding: 0 64px;
-  display: flex; align-items: stretch;
-  overflow: hidden;
-}
-.service-pill {
-  padding: 20px 40px;
-  border-right: 1px solid rgba(11,28,19,0.15);
-  font-size: 11px; font-weight: 600; letter-spacing: 0.16em;
-  text-transform: uppercase; color: var(--deep);
-  white-space: nowrap; display: flex; align-items: center; gap: 10px;
-  transition: background 0.2s; cursor: default;
-}
+.h-stat-num { font-family: 'Cormorant Garamond', serif; font-size: 44px; font-weight: 700; color: var(--gold); line-height: 1; }
+.h-stat-label { font-size: 10px; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.32); margin-top: 8px; line-height: 1.5; }
+.services-band { background: var(--gold); padding: 0 64px; display: flex; align-items: stretch; overflow: hidden; }
+.service-pill { padding: 20px 40px; border-right: 1px solid rgba(11,28,19,0.15); font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--deep); white-space: nowrap; display: flex; align-items: center; gap: 10px; transition: background 0.2s; cursor: default; }
 .service-pill:last-child { border-right: none; }
-.service-pill:hover { background: rgba(11,28,19,0.08); }
-.service-pill::before {
-  content: ''; display: block;
-  width: 4px; height: 4px; border-radius: 50%; background: var(--deep); opacity: 0.4;
-}
-
-/* ─── WHO WE SERVE ─── */
-.section-serve {
-  background: var(--cream);
-  padding: 130px 64px;
-  display: grid; grid-template-columns: 420px 1fr; gap: 100px; align-items: start;
-}
-
-.section-label {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px; font-weight: 500; letter-spacing: 0.22em;
-  text-transform: uppercase; color: var(--gold);
-  margin-bottom: 28px;
-  display: flex; align-items: center; gap: 14px;
-}
-.section-label::after {
-  content: ''; flex: 1; height: 1px;
-  background: linear-gradient(to right, var(--gold), transparent);
-  opacity: 0.5;
-}
-
-.serve-headline {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(42px, 4vw, 62px); font-weight: 600; line-height: 1.08;
-  letter-spacing: -0.02em; color: var(--deep);
-}
+.service-pill::before { content: ''; display: block; width: 4px; height: 4px; border-radius: 50%; background: var(--deep); opacity: 0.4; }
+.section-serve { background: var(--cream); padding: 130px 64px; display: grid; grid-template-columns: 420px 1fr; gap: 100px; align-items: start; }
+.section-label { font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 28px; display: flex; align-items: center; gap: 14px; }
+.section-label::after { content: ''; flex: 1; height: 1px; background: linear-gradient(to right, var(--gold), transparent); opacity: 0.5; }
+.serve-headline { font-family: 'Cormorant Garamond', serif; font-size: clamp(42px, 4vw, 62px); font-weight: 600; line-height: 1.08; letter-spacing: -0.02em; color: var(--deep); }
 .serve-headline em { font-style: italic; color: var(--light); }
-
-.serve-copy {
-  font-size: 16px; font-weight: 300; line-height: 1.85;
-  color: #556b5c; margin-top: 28px; margin-bottom: 44px;
-}
-
-.serve-cards {
-  display: flex; flex-direction: column; gap: 2px;
-  padding-top: 64px;
-}
-
-.serve-card {
-  display: flex; align-items: flex-start; gap: 28px;
-  padding: 36px 40px;
-  background: var(--stone);
-  border-left: 3px solid transparent;
-  transition: all 0.3s; cursor: default;
-}
-.serve-card:hover {
-  border-left-color: var(--gold);
-  background: white;
-  transform: translateX(4px);
-  box-shadow: 8px 0 40px rgba(0,0,0,0.06);
-}
-.serve-card-icon {
-  font-size: 26px; flex-shrink: 0; margin-top: 2px;
-}
-.serve-card-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 22px; font-weight: 600; color: var(--deep);
-  margin-bottom: 8px;
-}
-.serve-card-body {
-  font-size: 14px; font-weight: 300; line-height: 1.7; color: #6b7f72;
-}
-
-/* ─── SERVICES DETAIL ─── */
-.section-services {
-  background: var(--green);
-  padding: 130px 64px;
-}
-
-.services-top {
-  display: flex; justify-content: space-between; align-items: flex-end;
-  margin-bottom: 80px;
-}
-.services-headline {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(40px, 4.5vw, 64px); font-weight: 600; line-height: 1.06;
-  letter-spacing: -0.02em; color: var(--cream);
-  max-width: 500px;
-}
+.serve-copy { font-size: 16px; font-weight: 300; line-height: 1.85; color: #556b5c; margin-top: 28px; margin-bottom: 44px; }
+.serve-cards { display: flex; flex-direction: column; gap: 2px; padding-top: 64px; }
+.serve-card { display: flex; align-items: flex-start; gap: 28px; padding: 36px 40px; background: var(--stone); border-left: 3px solid transparent; transition: all 0.3s; cursor: default; }
+.serve-card:hover { border-left-color: var(--gold); background: white; transform: translateX(4px); box-shadow: 8px 0 40px rgba(0,0,0,0.06); }
+.serve-card-icon { font-size: 26px; flex-shrink: 0; margin-top: 2px; }
+.serve-card-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; color: var(--deep); margin-bottom: 8px; }
+.serve-card-body { font-size: 14px; font-weight: 300; line-height: 1.7; color: #6b7f72; }
+.section-services { background: var(--green); padding: 130px 64px; }
+.services-top { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 80px; }
+.services-headline { font-family: 'Cormorant Garamond', serif; font-size: clamp(40px, 4.5vw, 64px); font-weight: 600; line-height: 1.06; letter-spacing: -0.02em; color: var(--cream); max-width: 500px; }
 .services-headline em { font-style: italic; color: var(--gold); }
-
-.services-tagline {
-  font-size: 15px; font-weight: 300; line-height: 1.75;
-  color: rgba(255,255,255,0.42); max-width: 320px; text-align: right;
-}
-
-.services-grid {
-  display: grid; grid-template-columns: repeat(4, 1fr);
-  gap: 1px; background: rgba(255,255,255,0.06);
-}
-
-.svc-card {
-  background: var(--green);
-  padding: 48px 36px 52px;
-  position: relative; overflow: hidden;
-  transition: background 0.3s;
-}
-.svc-card::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0;
-  height: 2px; background: var(--gold);
-  transform: scaleX(0); transform-origin: left;
-  transition: transform 0.4s ease;
-}
+.services-tagline { font-size: 15px; font-weight: 300; line-height: 1.75; color: rgba(255,255,255,0.42); max-width: 320px; text-align: right; }
+.services-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: rgba(255,255,255,0.06); }
+.svc-card { background: var(--green); padding: 48px 36px 52px; position: relative; overflow: hidden; transition: background 0.3s; }
+.svc-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease; }
 .svc-card:hover { background: rgba(37,77,54,0.6); }
 .svc-card:hover::before { transform: scaleX(1); }
-
-.svc-num {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px; letter-spacing: 0.14em;
-  color: rgba(201,168,76,0.35); margin-bottom: 36px;
-}
+.svc-num { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: rgba(201,168,76,0.35); margin-bottom: 36px; }
 .svc-icon { font-size: 30px; margin-bottom: 20px; display: block; }
-.svc-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 22px; font-weight: 600; color: var(--cream);
-  margin-bottom: 14px; line-height: 1.2;
-}
-.svc-body {
-  font-size: 13.5px; font-weight: 300; line-height: 1.75;
-  color: rgba(255,255,255,0.38);
-}
-
-/* ─── STANDARDS / DIFFERENTIATORS ─── */
-.section-standards {
-  background: var(--cream);
-  padding: 130px 64px;
-}
-
-.standards-header {
-  text-align: center; margin-bottom: 90px;
-}
-.standards-headline {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(44px, 5vw, 70px); font-weight: 600; line-height: 1.05;
-  letter-spacing: -0.03em; color: var(--deep);
-}
+.svc-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; color: var(--cream); margin-bottom: 14px; line-height: 1.2; }
+.svc-body { font-size: 13.5px; font-weight: 300; line-height: 1.75; color: rgba(255,255,255,0.38); }
+.section-standards { background: var(--cream); padding: 130px 64px; }
+.standards-header { text-align: center; margin-bottom: 90px; }
+.standards-headline { font-family: 'Cormorant Garamond', serif; font-size: clamp(44px, 5vw, 70px); font-weight: 600; line-height: 1.05; letter-spacing: -0.03em; color: var(--deep); }
 .standards-headline em { font-style: italic; color: var(--light); }
-
-.standards-sub {
-  font-size: 16px; font-weight: 300; line-height: 1.8;
-  color: #6b7f72; max-width: 520px; margin: 24px auto 0;
-}
-
-.standards-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 36px;
-}
-
-.std-card {
-  padding: 48px 40px;
-  border: 1px solid rgba(0,0,0,0.07);
-  background: white;
-  border-radius: 1px;
-  transition: all 0.3s;
-  position: relative;
-}
-.std-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.09);
-  border-color: rgba(201,168,76,0.35);
-}
-.std-card::after {
-  content: '';
-  position: absolute; bottom: 0; left: 40px; right: 40px;
-  height: 2px; background: var(--gold); opacity: 0; transform: scaleX(0);
-  transition: all 0.3s;
-}
-.std-card:hover::after { opacity: 1; transform: scaleX(1); }
-
+.standards-sub { font-size: 16px; font-weight: 300; line-height: 1.8; color: #6b7f72; max-width: 520px; margin: 24px auto 0; }
+.standards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; }
+.std-card { padding: 48px 40px; border: 1px solid rgba(0,0,0,0.07); background: white; border-radius: 1px; transition: all 0.3s; position: relative; }
+.std-card:hover { transform: translateY(-4px); box-shadow: 0 20px 60px rgba(0,0,0,0.09); border-color: rgba(201,168,76,0.35); }
 .std-icon { font-size: 32px; margin-bottom: 24px; }
-.std-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 24px; font-weight: 600; color: var(--deep);
-  margin-bottom: 14px; line-height: 1.2;
-}
-.std-body {
-  font-size: 14px; font-weight: 300; line-height: 1.8; color: #6b7f72;
-}
-
-/* ─── QUOTE / FULL BLEED ─── */
-.section-quote {
-  background: var(--deep);
-  padding: 120px 64px;
-  display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: center;
-  position: relative; overflow: hidden;
-}
-
-.section-quote::before {
-  content: '"';
-  position: absolute; left: 40px; top: -60px;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 400px; font-weight: 700; font-style: italic;
-  color: rgba(201,168,76,0.05); line-height: 1;
-  pointer-events: none;
-}
-
-.quote-main {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(28px, 3vw, 42px); font-style: italic;
-  font-weight: 400; line-height: 1.55; color: var(--cream);
-  position: relative; z-index: 1;
-}
+.std-title { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 600; color: var(--deep); margin-bottom: 14px; line-height: 1.2; }
+.std-body { font-size: 14px; font-weight: 300; line-height: 1.8; color: #6b7f72; }
+.section-quote { background: var(--deep); padding: 120px 64px; display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: center; position: relative; overflow: hidden; }
+.quote-main { font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 3vw, 42px); font-style: italic; font-weight: 400; line-height: 1.55; color: var(--cream); position: relative; z-index: 1; }
 .quote-main strong { color: var(--gold); font-style: normal; font-weight: 600; }
-
-.quote-attr-block { position: relative; z-index: 1; }
-.quote-attr-name {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 22px; font-weight: 600; color: var(--gold); margin-bottom: 4px;
-}
-.quote-attr-title {
-  font-size: 12px; font-weight: 400; letter-spacing: 0.1em;
-  text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 36px;
-}
-
-.grand-strand-note {
-  padding: 32px 36px;
-  border: 1px solid rgba(201,168,76,0.18);
-  border-radius: 1px;
-  background: rgba(201,168,76,0.04);
-}
-.gn-label {
-  font-family: 'DM Mono', monospace; font-size: 10px;
-  letter-spacing: 0.16em; text-transform: uppercase;
-  color: rgba(201,168,76,0.55); margin-bottom: 16px;
-}
-.gn-text {
-  font-size: 15px; font-weight: 300; line-height: 1.8;
-  color: rgba(255,255,255,0.45);
-}
-.gn-list {
-  list-style: none; margin-top: 16px;
-  display: flex; flex-direction: column; gap: 10px;
-}
-.gn-list li {
-  font-size: 14px; font-weight: 400; color: rgba(255,255,255,0.55);
-  display: flex; align-items: center; gap: 12px;
-}
-.gn-list li::before {
-  content: '';
-  display: block; width: 6px; height: 1px; background: var(--gold); flex-shrink: 0;
-}
-
-/* ─── CONTACT / CTA ─── */
-.section-cta {
-  background: var(--stone);
-  padding: 130px 64px;
-  display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: start;
-}
-
-.cta-headline {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(44px, 5vw, 68px); font-weight: 600; line-height: 1.06;
-  letter-spacing: -0.03em; color: var(--deep);
-}
+.quote-attr-name { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; color: var(--gold); margin-bottom: 4px; }
+.quote-attr-title { font-size: 12px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 36px; }
+.grand-strand-note { padding: 32px 36px; border: 1px solid rgba(201,168,76,0.18); border-radius: 1px; background: rgba(201,168,76,0.04); }
+.gn-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(201,168,76,0.55); margin-bottom: 16px; }
+.gn-text { font-size: 15px; font-weight: 300; line-height: 1.8; color: rgba(255,255,255,0.45); }
+.gn-list { list-style: none; margin-top: 16px; display: flex; flex-direction: column; gap: 10px; }
+.gn-list li { font-size: 14px; font-weight: 400; color: rgba(255,255,255,0.55); display: flex; align-items: center; gap: 12px; }
+.gn-list li::before { content: ''; display: block; width: 6px; height: 1px; background: var(--gold); flex-shrink: 0; }
+.section-cta { background: var(--stone); padding: 130px 64px; display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: start; }
+.cta-headline { font-family: 'Cormorant Garamond', serif; font-size: clamp(44px, 5vw, 68px); font-weight: 600; line-height: 1.06; letter-spacing: -0.03em; color: var(--deep); }
 .cta-headline em { font-style: italic; color: var(--light); }
-
-.cta-body {
-  font-size: 16px; font-weight: 300; line-height: 1.85;
-  color: #5a6e61; margin-top: 24px; margin-bottom: 52px;
-}
-
-.btn-green {
-  font-family: 'Jost', sans-serif;
-  font-size: 11.5px; font-weight: 600; letter-spacing: 0.18em;
-  text-transform: uppercase; color: var(--cream);
-  background: var(--green); border: none;
-  padding: 18px 44px; border-radius: 1px;
-  cursor: pointer; transition: all 0.25s;
-}
-.btn-green:hover { background: var(--mid); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(18,42,28,0.2); }
-
-.contact-details {
-  display: flex; flex-direction: column; gap: 24px;
-  padding-top: 8px;
-}
-.contact-item {
-  display: flex; flex-direction: column; gap: 6px;
-  padding-bottom: 24px;
-  border-bottom: 1px solid rgba(0,0,0,0.07);
-}
+.cta-body { font-size: 16px; font-weight: 300; line-height: 1.85; color: #5a6e61; margin-top: 24px; margin-bottom: 28px; }
+.btn-green { font-family: 'Jost', sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream); background: var(--green); border: none; padding: 18px 44px; border-radius: 1px; cursor: pointer; transition: all 0.25s; }
+.contact-details { display: flex; flex-direction: column; gap: 24px; padding-top: 8px; }
+.contact-item { display: flex; flex-direction: column; gap: 6px; padding-bottom: 24px; border-bottom: 1px solid rgba(0,0,0,0.07); }
 .contact-item:last-child { border-bottom: none; }
-.c-label {
-  font-family: 'DM Mono', monospace; font-size: 10px;
-  letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold);
-}
-.c-value {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 20px; font-weight: 500; color: var(--deep);
-}
+.c-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); }
+.c-value { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 500; color: var(--deep); }
 .c-note { font-size: 13px; font-weight: 300; color: #7a8e80; }
-
-/* ─── FOOTER ─── */
-footer {
-  background: var(--deep);
-  padding: 48px 64px;
-  display: flex; align-items: center; justify-content: space-between;
-  border-top: 1px solid rgba(201,168,76,0.1);
-}
-
-.footer-logo {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 18px; font-weight: 700; letter-spacing: 0.1em;
-  text-transform: uppercase; color: var(--gold);
-}
-.footer-logo span {
-  display: block; font-family: 'Jost', sans-serif;
-  font-size: 10px; font-weight: 300; letter-spacing: 0.2em;
-  color: rgba(255,255,255,0.22); margin-top: 5px;
-}
-
-.footer-links {
-  display: flex; gap: 36px; list-style: none;
-}
-.footer-links a {
-  font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
-  text-transform: uppercase; color: rgba(255,255,255,0.28);
-  text-decoration: none; transition: color 0.2s;
-}
+footer { background: var(--deep); padding: 48px 64px; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid rgba(201,168,76,0.1); }
+.footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); }
+.footer-logo span { display: block; font-family: 'Jost', sans-serif; font-size: 10px; font-weight: 300; letter-spacing: 0.2em; color: rgba(255,255,255,0.22); margin-top: 5px; }
+.footer-links { display: flex; gap: 36px; list-style: none; }
+.footer-links a { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.28); text-decoration: none; transition: color 0.2s; }
 .footer-links a:hover { color: var(--gold); }
-
-.footer-copy {
-  font-size: 11px; color: rgba(255,255,255,0.18);
-  text-align: right; line-height: 1.6;
-}
-
-/* ─── ANIMATIONS ─── */
-.reveal {
-  opacity: 0; transform: translateY(28px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-}
+.footer-copy { font-size: 11px; color: rgba(255,255,255,0.18); text-align: right; line-height: 1.6; }
+.proposal-form { display: flex; flex-direction: column; gap: 14px; margin-top: 28px; max-width: 440px; }
+.form-field { display: flex; flex-direction: column; gap: 7px; }
+.form-label { font-size: 10.5px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--light); }
+.form-input { background: white; border: 1px solid rgba(26,58,42,0.2); border-radius: 1px; padding: 12px 16px; font-family: 'Jost', sans-serif; font-size: 14px; font-weight: 300; color: var(--deep); outline: none; transition: border-color 0.2s; }
+.form-input:focus { border-color: var(--gold); }
+.form-input::placeholder { color: rgba(42,61,48,0.35); }
+.consent-label { display: flex; align-items: flex-start; gap: 12px; cursor: pointer; margin-top: 6px; padding: 16px 18px; background: rgba(26,58,42,0.05); border: 1px solid rgba(26,58,42,0.1); border-radius: 1px; }
+.consent-checkbox { margin-top: 2px; flex-shrink: 0; width: 16px; height: 16px; accent-color: var(--gold); cursor: pointer; }
+.consent-text { font-size: 12px; font-weight: 300; line-height: 1.65; color: #4a5e50; }
+.consent-text strong { font-weight: 600; color: var(--deep); }
+.consent-text a { color: var(--gold); text-decoration: none; }
+.form-success { display: none; font-size: 13px; font-weight: 400; color: #2a7a4a; padding: 14px 18px; background: rgba(42,122,74,0.08); border: 1px solid rgba(42,122,74,0.2); border-radius: 1px; margin-top: 4px; }
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.8s ease, transform 0.8s ease; }
 .reveal.in { opacity: 1; transform: translateY(0); }
-.reveal-delay-1 { transition-delay: 0.1s; }
-.reveal-delay-2 { transition-delay: 0.2s; }
-.reveal-delay-3 { transition-delay: 0.3s; }
-.reveal-delay-4 { transition-delay: 0.4s; }
-.reveal-delay-5 { transition-delay: 0.5s; }
-.reveal-delay-6 { transition-delay: 0.6s; }
-
-/* Hero entrance */
-.hero-eyebrow  { animation: rise 0.9s ease 0.1s both; }
-.hero-h1       { animation: rise 0.9s ease 0.3s both; }
-.hero-sub      { animation: rise 0.9s ease 0.5s both; }
-.hero-bottom   { animation: rise 0.9s ease 0.65s both; }
-.hero-stats    { animation: rise 0.9s ease 0.5s both; }
-.hero-accent-line { animation: grow 1.2s ease 0.2s both; }
-
+.reveal-delay-1 { transition-delay: 0.1s; } .reveal-delay-2 { transition-delay: 0.2s; } .reveal-delay-3 { transition-delay: 0.3s; } .reveal-delay-4 { transition-delay: 0.4s; } .reveal-delay-5 { transition-delay: 0.5s; }
+.hero-eyebrow { animation: rise 0.9s ease 0.1s both; } .hero-h1 { animation: rise 0.9s ease 0.3s both; } .hero-sub { animation: rise 0.9s ease 0.5s both; } .hero-bottom { animation: rise 0.9s ease 0.65s both; } .hero-stats { animation: rise 0.9s ease 0.5s both; } .hero-accent-line { animation: grow 1.2s ease 0.2s both; }
 @keyframes rise { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
 @keyframes grow { from { transform:scaleY(0); transform-origin:top; } to { transform:scaleY(1); } }
-
 </style>
 </head>
 <body>
-
-<!-- NAV -->
 <nav id="nav">
-  <div class="nav-logo" style="flex-direction: row; align-items: center; gap: 14px;">
-  <img src="/logo.png" alt="NLM" style="height: 44px; width: 44px; border-radius: 50%;">
-  <div style="display: flex; flex-direction: column; gap: 3px;">
-    <span class="logo-name">National Landscape Management</span>
-    <span class="logo-tag">Commercial Landscaping · Myrtle Beach, SC</span>
-  </div>
-</div>
-  <ul class="nav-links">
-    <li><a href="#services">Services</a></li>
-    <li><a href="#who">Who We Serve</a></li>
-    <li><a href="#standards">Our Standards</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
+  <div class="nav-logo"><div class="logo-name">NLM</div><div class="logo-tag">National Landscape Management</div></div>
+  <ul class="nav-links"><li><a href="#services">Services</a></li><li><a href="#who">Who We Serve</a></li><li><a href="#standards">Our Standards</a></li><li><a href="#contact">Contact</a></li></ul>
   <button class="nav-cta">Request a Proposal</button>
 </nav>
-
-<!-- HERO -->
 <section class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-grid"></div>
-  <div class="hero-watermark">NLM</div>
-  <div class="hero-accent-line"></div>
-
+  <div class="hero-bg"></div><div class="hero-grid"></div><div class="hero-watermark">NLM</div><div class="hero-accent-line"></div>
   <div class="hero-stats">
-    <div class="hero-stat-box">
-      <div class="h-stat-num">30+</div>
-      <div class="h-stat-label">Crew members in the field</div>
-    </div>
-    <div class="hero-stat-box">
-      <div class="h-stat-num">HOA</div>
-      <div class="h-stat-label">Communities & commercial properties</div>
-    </div>
-    <div class="hero-stat-box">
-      <div class="h-stat-num">843</div>
-      <div class="h-stat-label">Myrtle Beach local</div>
-    </div>
+    <div class="hero-stat-box"><div class="h-stat-num">30+</div><div class="h-stat-label">Crew members in the field</div></div>
+    <div class="hero-stat-box"><div class="h-stat-num">HOA</div><div class="h-stat-label">Communities &amp; commercial properties</div></div>
+    <div class="hero-stat-box"><div class="h-stat-num">843</div><div class="h-stat-label">Myrtle Beach local</div></div>
   </div>
-
   <div class="hero-content">
-    <div class="hero-eyebrow">
-      <div class="hero-eyebrow-line"></div>
-      <div class="hero-eyebrow-text">Commercial Landscaping &nbsp;·&nbsp; Myrtle Beach, SC &nbsp;·&nbsp; Grand Strand</div>
-    </div>
-
-    <h1 class="hero-h1">
-      The standard<br>
-      every property<br>
-      <em>deserves.</em>
-    </h1>
-
-    <p class="hero-sub">
-      Commercial landscape management for HOA communities, property managers, and apartment complexes across the Grand Strand. Consistent crews. Transparent communication. Properties that look the part.
-    </p>
-
-    <div class="hero-bottom">
-      <button class="btn-gold">Request a Proposal</button>
-      <a href="#services" class="btn-ghost-lt">View Our Services</a>
-    </div>
+    <div class="hero-eyebrow"><div class="hero-eyebrow-line"></div><div class="hero-eyebrow-text">Commercial Landscaping &nbsp;·&nbsp; Myrtle Beach, SC &nbsp;·&nbsp; Grand Strand</div></div>
+    <h1 class="hero-h1">The standard<br>every property<br><em>deserves.</em></h1>
+    <p class="hero-sub">Commercial landscape management for HOA communities, property managers, and apartment complexes across the Grand Strand. Consistent crews. Transparent communication. Properties that look the part.</p>
+    <div class="hero-bottom"><button class="btn-gold">Request a Proposal</button><a href="#services" class="btn-ghost-lt">View Our Services</a></div>
   </div>
-
-  <div class="hero-scroll-hint">
-    <div class="scroll-line"></div>
-    <div class="scroll-label">Scroll</div>
-  </div>
+  <div class="hero-scroll-hint"><div class="scroll-line"></div><div class="scroll-label">Scroll</div></div>
 </section>
-
-<!-- SERVICES BAND -->
 <div class="services-band">
-  <div class="service-pill">Grounds Maintenance</div>
-  <div class="service-pill">Irrigation Service</div>
-  <div class="service-pill">Seasonal Color</div>
-  <div class="service-pill">Fertilization Programs</div>
-  <div class="service-pill">Mulch & Bed Care</div>
-  <div class="service-pill">HOA Communities</div>
+  <div class="service-pill">Grounds Maintenance</div><div class="service-pill">Irrigation Service</div><div class="service-pill">Seasonal Color</div><div class="service-pill">Fertilization Programs</div><div class="service-pill">Mulch &amp; Bed Care</div><div class="service-pill">HOA Communities</div>
 </div>
-
-<!-- WHO WE SERVE -->
 <section class="section-serve" id="who">
   <div>
     <div class="section-label">Who We Serve</div>
@@ -690,217 +166,80 @@ footer {
     <p class="serve-copy">You don't have time to chase a landscaper. You need a company that shows up on schedule, communicates proactively, and makes your property something you're proud to walk.</p>
     <button class="btn-green" style="background:var(--green); color:var(--cream);" onclick="document.getElementById('contact').scrollIntoView()">Talk to Our Team</button>
   </div>
-
   <div class="serve-cards">
-    <div class="serve-card reveal">
-      <div class="serve-card-icon">🏘️</div>
-      <div>
-        <div class="serve-card-title">HOA Communities</div>
-        <div class="serve-card-body">Homeowners notice everything. We maintain the standard your board promised them — consistent crews, documented visit reports, and direct communication with management when anything needs attention.</div>
-      </div>
-    </div>
-    <div class="serve-card reveal reveal-delay-1">
-      <div class="serve-card-icon">🏢</div>
-      <div>
-        <div class="serve-card-title">Property Management Companies</div>
-        <div class="serve-card-body">One point of contact. Portfolio-level service. Your property managers get proactive updates, not reactive explanations. We make you look good to your clients.</div>
-      </div>
-    </div>
-    <div class="serve-card reveal reveal-delay-2">
-      <div class="serve-card-icon">🏗️</div>
-      <div>
-        <div class="serve-card-title">Apartment Complexes</div>
-        <div class="serve-card-body">Curb appeal drives leasing decisions. We keep your common areas, entries, and amenity spaces looking sharp — on schedule, every week, without prompting.</div>
-      </div>
-    </div>
-    <div class="serve-card reveal reveal-delay-3">
-      <div class="serve-card-icon">🏬</div>
-      <div>
-        <div class="serve-card-title">Commercial Properties</div>
-        <div class="serve-card-body">First impressions matter to your tenants and their customers. We deliver the detail-oriented maintenance that keeps commercial properties competitive in a crowded market.</div>
-      </div>
-    </div>
+    <div class="serve-card reveal"><div class="serve-card-icon">🏘️</div><div><div class="serve-card-title">HOA Communities</div><div class="serve-card-body">Homeowners notice everything. We maintain the standard your board promised them — consistent crews, documented visit reports, and direct communication with management when anything needs attention.</div></div></div>
+    <div class="serve-card reveal reveal-delay-1"><div class="serve-card-icon">🏢</div><div><div class="serve-card-title">Property Management Companies</div><div class="serve-card-body">One point of contact. Portfolio-level service. Your property managers get proactive updates, not reactive explanations. We make you look good to your clients.</div></div></div>
+    <div class="serve-card reveal reveal-delay-2"><div class="serve-card-icon">🏗️</div><div><div class="serve-card-title">Apartment Complexes</div><div class="serve-card-body">Curb appeal drives leasing decisions. We keep your common areas, entries, and amenity spaces looking sharp — on schedule, every week, without prompting.</div></div></div>
+    <div class="serve-card reveal reveal-delay-3"><div class="serve-card-icon">🏬</div><div><div class="serve-card-title">Commercial Properties</div><div class="serve-card-body">First impressions matter to your tenants and their customers. We deliver the detail-oriented maintenance that keeps commercial properties competitive in a crowded market.</div></div></div>
   </div>
 </section>
-
-<!-- SERVICES DETAIL -->
 <section class="section-services" id="services">
-  <div class="services-top">
-    <div>
-      <div class="section-label" style="color:rgba(201,168,76,0.6);">Our Services</div>
-      <h2 class="services-headline">Everything your<br>property needs.<br><em>Nothing it doesn't.</em></h2>
-    </div>
-    <p class="services-tagline">Every service is delivered by trained, consistent crews who know your property — not a different face every week.</p>
-  </div>
-
+  <div class="services-top"><div><div class="section-label" style="color:rgba(201,168,76,0.6);">Our Services</div><h2 class="services-headline">Everything your<br>property needs.<br><em>Nothing it doesn't.</em></h2></div><p class="services-tagline">Every service is delivered by trained, consistent crews who know your property — not a different face every week.</p></div>
   <div class="services-grid">
-    <div class="svc-card reveal">
-      <div class="svc-num">01</div>
-      <div class="svc-icon">✂️</div>
-      <div class="svc-title">Grounds Maintenance</div>
-      <div class="svc-body">Weekly and bi-weekly mowing, edging, trimming, and clean-up. Properties maintained to a defined standard, documented after every visit.</div>
-    </div>
-    <div class="svc-card reveal reveal-delay-1">
-      <div class="svc-num">02</div>
-      <div class="svc-icon">💧</div>
-      <div class="svc-title">Irrigation Service & Repair</div>
-      <div class="svc-body">System inspections, head repairs, valve replacements, and controller programming. Repair tickets documented with photos and materials — complete audit trail.</div>
-    </div>
-    <div class="svc-card reveal reveal-delay-2">
-      <div class="svc-num">03</div>
-      <div class="svc-icon">🌸</div>
-      <div class="svc-title">Seasonal Color Programs</div>
-      <div class="svc-body">Spring and fall flower installations planned per property. Consistent plant varieties and layouts documented with photos year over year so nothing has to be guessed.</div>
-    </div>
-    <div class="svc-card reveal reveal-delay-3">
-      <div class="svc-num">04</div>
-      <div class="svc-icon">🌿</div>
-      <div class="svc-title">Fertilization & Weed Control</div>
-      <div class="svc-body">Licensed applicator on staff. Scheduled programs with documented product, rate, and application date on every property. DEP-compliant records kept permanently.</div>
-    </div>
-    <div class="svc-card reveal reveal-delay-4">
-      <div class="svc-num">05</div>
-      <div class="svc-icon">🪵</div>
-      <div class="svc-title">Mulch & Bed Maintenance</div>
-      <div class="svc-body">Annual and refresh mulch installs, bed edging, weed suppression, and shrub pruning. Beds that look intentional — not like an afterthought.</div>
-    </div>
-    <div class="svc-card reveal reveal-delay-5">
-      <div class="svc-num">06</div>
-      <div class="svc-icon">📋</div>
-      <div class="svc-title">Property Reporting</div>
-      <div class="svc-body">Visit summaries delivered after every service. Photo documentation. Issues flagged before they become your problem. You stay informed without having to ask.</div>
-    </div>
+    <div class="svc-card reveal"><div class="svc-num">01</div><div class="svc-icon">✂️</div><div class="svc-title">Grounds Maintenance</div><div class="svc-body">Weekly and bi-weekly mowing, edging, trimming, and clean-up. Properties maintained to a defined standard, documented after every visit.</div></div>
+    <div class="svc-card reveal reveal-delay-1"><div class="svc-num">02</div><div class="svc-icon">💧</div><div class="svc-title">Irrigation Service &amp; Repair</div><div class="svc-body">System inspections, head repairs, valve replacements, and controller programming. Repair tickets documented with photos and materials — complete audit trail.</div></div>
+    <div class="svc-card reveal reveal-delay-2"><div class="svc-num">03</div><div class="svc-icon">🌸</div><div class="svc-title">Seasonal Color Programs</div><div class="svc-body">Spring and fall flower installations planned per property. Consistent plant varieties and layouts documented year over year.</div></div>
+    <div class="svc-card reveal reveal-delay-3"><div class="svc-num">04</div><div class="svc-icon">🌿</div><div class="svc-title">Fertilization &amp; Weed Control</div><div class="svc-body">Licensed applicator on staff. Scheduled programs with documented product, rate, and application date on every property. DEP-compliant records kept permanently.</div></div>
+    <div class="svc-card reveal reveal-delay-4"><div class="svc-num">05</div><div class="svc-icon">🪵</div><div class="svc-title">Mulch &amp; Bed Maintenance</div><div class="svc-body">Annual and refresh mulch installs, bed edging, weed suppression, and shrub pruning. Beds that look intentional — not like an afterthought.</div></div>
+    <div class="svc-card reveal reveal-delay-5"><div class="svc-num">06</div><div class="svc-icon">📋</div><div class="svc-title">Property Reporting</div><div class="svc-body">Visit summaries delivered after every service. Photo documentation. Issues flagged before they become your problem. You stay informed without having to ask.</div></div>
   </div>
 </section>
-
-<!-- STANDARDS -->
 <section class="section-standards" id="standards">
-  <div class="standards-header reveal">
-    <div class="section-label" style="justify-content:center; color:var(--light);">Why NLM</div>
-    <h2 class="standards-headline">The things that separate<br><em>good from reliable.</em></h2>
-    <p class="standards-sub">Most landscaping companies can cut grass. Fewer can tell you what they did, prove they were there, and communicate before you have to call.</p>
-  </div>
-
+  <div class="standards-header reveal"><div class="section-label" style="justify-content:center; color:var(--light);">Why NLM</div><h2 class="standards-headline">The things that separate<br><em>good from reliable.</em></h2><p class="standards-sub">Most landscaping companies can cut grass. Fewer can tell you what they did, prove they were there, and communicate before you have to call.</p></div>
   <div class="standards-grid">
-    <div class="std-card reveal">
-      <div class="std-icon">📍</div>
-      <div class="std-title">GPS-Verified Every Visit</div>
-      <div class="std-body">Every crew member clocks in and out with GPS verification. You'll never wonder if we were there. Visit records are permanent and available on request.</div>
-    </div>
-    <div class="std-card reveal reveal-delay-1">
-      <div class="std-icon">📸</div>
-      <div class="std-title">Photo Documentation</div>
-      <div class="std-body">Pre-existing conditions, completed work, and flagged issues captured with photos on every visit. Your protection in any dispute starts with documentation.</div>
-    </div>
-    <div class="std-card reveal reveal-delay-2">
-      <div class="std-icon">🔔</div>
-      <div class="std-title">Proactive Communication</div>
-      <div class="std-body">You hear about issues from us before your board or residents call you. We flag, document, and communicate — you don't have to chase us for updates.</div>
-    </div>
-    <div class="std-card reveal reveal-delay-3">
-      <div class="std-icon">👤</div>
-      <div class="std-title">Consistent Assigned Crews</div>
-      <div class="std-body">Your property has an assigned crew leader who knows your property, your preferences, and your standards. Not a different person every week who has to relearn your site.</div>
-    </div>
-    <div class="std-card reveal reveal-delay-4">
-      <div class="std-icon">📄</div>
-      <div class="std-title">Clear Scope of Work</div>
-      <div class="std-body">Every contract defines exactly what's included and what isn't. No ambiguity, no scope creep disputes. You know what you're paying for before the first visit.</div>
-    </div>
-    <div class="std-card reveal reveal-delay-5">
-      <div class="std-icon">✅</div>
-      <div class="std-title">Licensed & Insured</div>
-      <div class="std-body">Fully licensed and insured with certificates of insurance available for every property that requires it. Compliance documentation produced on demand — no hunting required.</div>
-    </div>
+    <div class="std-card reveal"><div class="std-icon">📍</div><div class="std-title">GPS-Verified Every Visit</div><div class="std-body">Every crew member clocks in and out with GPS verification. You'll never wonder if we were there. Visit records are permanent and available on request.</div></div>
+    <div class="std-card reveal reveal-delay-1"><div class="std-icon">📸</div><div class="std-title">Photo Documentation</div><div class="std-body">Pre-existing conditions, completed work, and flagged issues captured with photos on every visit. Your protection in any dispute starts with documentation.</div></div>
+    <div class="std-card reveal reveal-delay-2"><div class="std-icon">🔔</div><div class="std-title">Proactive Communication</div><div class="std-body">You hear about issues from us before your board or residents call you. We flag, document, and communicate — you don't have to chase us for updates.</div></div>
+    <div class="std-card reveal reveal-delay-3"><div class="std-icon">👤</div><div class="std-title">Consistent Assigned Crews</div><div class="std-body">Your property has an assigned crew leader who knows your property, your preferences, and your standards. Not a different person every week who has to relearn your site.</div></div>
+    <div class="std-card reveal reveal-delay-4"><div class="std-icon">📄</div><div class="std-title">Clear Scope of Work</div><div class="std-body">Every contract defines exactly what's included and what isn't. No ambiguity, no scope creep disputes. You know what you're paying for before the first visit.</div></div>
+    <div class="std-card reveal reveal-delay-5"><div class="std-icon">✅</div><div class="std-title">Licensed &amp; Insured</div><div class="std-body">Fully licensed and insured with certificates of insurance available for every property that requires it. Compliance documentation produced on demand — no hunting required.</div></div>
   </div>
 </section>
-
-<!-- QUOTE -->
 <section class="section-quote">
-  <div class="quote-main">
-    "Property managers stop calling you because they have <strong>everything they need.</strong> That's the relationship we're building — not just the lawn."
-  </div>
+  <div class="quote-main">"Property managers stop calling you because they have <strong>everything they need.</strong> That's the relationship we're building — not just the lawn."</div>
   <div class="quote-attr-block">
     <div class="quote-attr-name">Jason Stroupe</div>
     <div class="quote-attr-title">Owner · National Landscape Management · Myrtle Beach, SC</div>
-    <div class="grand-strand-note">
-      <div class="gn-label">Serving the Grand Strand</div>
-      <div class="gn-text">Commercial landscape management across Horry County and the surrounding area, including:</div>
-      <ul class="gn-list">
-        <li>Myrtle Beach · North Myrtle Beach</li>
-        <li>Conway · Surfside Beach</li>
-        <li>Socastee · Carolina Forest</li>
-        <li>Pawleys Island · Murrells Inlet</li>
-      </ul>
-    </div>
+    <div class="grand-strand-note"><div class="gn-label">Serving the Grand Strand</div><div class="gn-text">Commercial landscape management across Horry County and the surrounding area, including:</div><ul class="gn-list"><li>Myrtle Beach · North Myrtle Beach</li><li>Conway · Surfside Beach</li><li>Socastee · Carolina Forest</li><li>Pawleys Island · Murrells Inlet</li></ul></div>
   </div>
 </section>
-
-<!-- CTA / CONTACT -->
 <section class="section-cta" id="contact">
   <div>
     <div class="section-label">Get in Touch</div>
     <h2 class="cta-headline">Let's talk about<br>your <em>property.</em></h2>
     <p class="cta-body">We work with HOA boards, property management companies, and commercial property owners who are done settling for inconsistent service. If that's you, we'd like to talk.</p>
-    <button class="btn-green">Request a Proposal</button>
+    <form id="nlm-proposal-form" class="proposal-form">
+      <div class="form-field"><label for="nlm-name" class="form-label">Your Name</label><input type="text" id="nlm-name" name="name" class="form-input" placeholder="Full name" required></div>
+      <div class="form-field"><label for="nlm-email" class="form-label">Email Address</label><input type="email" id="nlm-email" name="email" class="form-input" placeholder="you@company.com" required></div>
+      <div class="form-field"><label for="nlm-phone" class="form-label">Phone Number</label><input type="tel" id="nlm-phone" name="phone" class="form-input" placeholder="(843) 000-0000"></div>
+      <div class="form-field"><label for="nlm-property" class="form-label">Property / Company</label><input type="text" id="nlm-property" name="property" class="form-input" placeholder="Property or company name"></div>
+      <label class="consent-label">
+        <input type="checkbox" id="nlm-sms-consent" name="sms_consent" class="consent-checkbox" value="yes" required>
+        <span class="consent-text">I consent to receive SMS text messages from National Landscape Management LLC regarding my service inquiry, appointment confirmations, and service updates. Message frequency varies. Msg &amp; data rates may apply. Reply <strong>STOP</strong> to opt out at any time. Reply <strong>HELP</strong> for assistance. View our <a href="/privacy">Privacy Policy</a> and <a href="/terms">Terms &amp; Conditions</a>.</span>
+      </label>
+      <button type="submit" class="btn-gold" style="border:none;">Request a Proposal</button>
+      <div id="nlm-form-msg" class="form-success">✓ Submitted — we'll be in touch within one business day.</div>
+    </form>
   </div>
-
   <div class="contact-details reveal">
-    <div class="contact-item">
-      <div class="c-label">Phone</div>
-      <div class="c-value"><a href="tel:8439600211" style="color: inherit; text-decoration: none;">(843) 960-0211</a></div>
-      <div class="c-note">Available Monday – Friday, 7am – 5pm</div>
-    </div>
-    <div class="contact-item">
-      <div class="c-label">Email</div>
-      <div class="c-value">info@accessnlm.com</div>
-      <div class="c-note">We respond within one business day</div>
-    </div>
-    <div class="contact-item">
-      <div class="c-label">Service Area</div>
-      <div class="c-value">Grand Strand, SC</div>
-      <div class="c-note">Myrtle Beach and surrounding Horry County communities</div>
-    </div>
-    <div class="contact-item">
-      <div class="c-label">Proposals</div>
-      <div class="c-value">Typically within 48 hours</div>
-      <div class="c-note">Site walk required for all new properties</div>
-    </div>
+    <div class="contact-item"><div class="c-label">Phone</div><div class="c-value">(843) 960-0211</div><div class="c-note">Available Monday – Friday, 7am – 5pm</div></div>
+    <div class="contact-item"><div class="c-label">Email</div><div class="c-value">info@accessnlm.com</div><div class="c-note">We respond within one business day</div></div>
+    <div class="contact-item"><div class="c-label">Service Area</div><div class="c-value">Grand Strand, SC</div><div class="c-note">Myrtle Beach and surrounding Horry County communities</div></div>
+    <div class="contact-item"><div class="c-label">Proposals</div><div class="c-value">Typically within 48 hours</div><div class="c-note">Site walk required for all new properties</div></div>
   </div>
 </section>
-
-<!-- FOOTER -->
 <footer>
-  <div class="footer-logo">
-    National Landscape Management
-    <span>Myrtle Beach, SC &nbsp;·&nbsp; accessnlm.com &nbsp;·&nbsp; Licensed & Insured</span>
-  </div>
-  <ul class="footer-links">
-    <li><a href="#services">Services</a></li>
-    <li><a href="#who">Who We Serve</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="/privacy">Privacy</a></li>
-    <li><a href="/terms">Terms</a></li>
-  </ul>
-  <div class="footer-copy">
-    © 2026 National Landscape Management LLC<br>
-    All rights reserved.
-  </div>
+  <div class="footer-logo">National Landscape Management<span>Myrtle Beach, SC &nbsp;·&nbsp; accessnlm.com &nbsp;·&nbsp; Licensed &amp; Insured</span></div>
+  <ul class="footer-links"><li><a href="#services">Services</a></li><li><a href="#who">Who We Serve</a></li><li><a href="#standards">Standards</a></li><li><a href="#contact">Contact</a></li><li><a href="/privacy">Privacy Policy</a></li><li><a href="/terms">Terms &amp; Conditions</a></li></ul>
+  <div class="footer-copy">© 2026 National Landscape Management LLC<br>All rights reserved.</div>
 </footer>
-
 <script>
-  // Nav scroll
+  const form = document.getElementById('nlm-proposal-form');
+  if (form) { form.addEventListener('submit', function(e) { e.preventDefault(); form.style.display = 'none'; document.getElementById('nlm-form-msg').style.display = 'block'; }); }
   const nav = document.getElementById('nav');
-  window.addEventListener('scroll', () => {
-    nav.classList.toggle('dark', window.scrollY > 60);
-  });
-
-  // Reveal observer
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
-  }, { threshold: 0.12 });
+  window.addEventListener('scroll', () => { nav.classList.toggle('dark', window.scrollY > 60); });
+  const obs = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); }); }, { threshold: 0.12 });
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 </script>
-
 </body>
 </html>
