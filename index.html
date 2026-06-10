@@ -326,7 +326,42 @@ footer{flex-direction:column;align-items:flex-start;gap:22px;padding:40px 24px;}
 </footer>
 <script>
   const form=document.getElementById('nlm-proposal-form');
-  if(form){form.addEventListener('submit',function(e){e.preventDefault();form.style.display='none';document.getElementById('nlm-form-msg').style.display='block';});}
+  if(form){
+    const msg=document.getElementById('nlm-form-msg');
+    const btn=form.querySelector('button[type="submit"]');
+    let errEl=null;
+    form.addEventListener('submit',async function(e){
+      e.preventDefault();
+      const data={
+        name:(form.querySelector('#nlm-name')?.value||'').trim(),
+        email:(form.querySelector('#nlm-email')?.value||'').trim(),
+        phone:(form.querySelector('#nlm-phone')?.value||'').trim(),
+        property:(form.querySelector('#nlm-property')?.value||'').trim(),
+        smsConsent:form.querySelector('#nlm-sms-consent')?.checked?'true':'false'
+      };
+      if(btn){btn.disabled=true;btn.textContent='Sending...';}
+      try{
+        const res=await fetch('https://ops.accessnlm.com/api/proposal/submit',{
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body:JSON.stringify(data)
+        });
+        if(!res.ok) throw new Error('HTTP '+res.status);
+        form.style.display='none';
+        if(msg) msg.style.display='block';
+      }catch(err){
+        console.error('Form submission error:',err);
+        if(btn){btn.disabled=false;btn.textContent='Request a Proposal';}
+        if(!errEl){
+          errEl=document.createElement('p');
+          errEl.id='nlm-form-error';
+          errEl.style.cssText='color:#dc2626;font-size:14px;line-height:1.5;margin-top:12px;';
+          form.appendChild(errEl);
+        }
+        errEl.textContent="Sorry, something went wrong sending your request. Please call us at (843) 960-0211 and we'll take care of you right away.";
+      }
+    });
+  }
   const nav=document.getElementById('nav');
   window.addEventListener('scroll',()=>{nav.classList.toggle('dark',window.scrollY>60);});
   const navToggle=document.getElementById('nav-toggle');
